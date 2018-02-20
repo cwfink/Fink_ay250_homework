@@ -32,3 +32,13 @@ less secure apps.
 
 
 The user must obtain thier own Houndify Client_Key and Client_Key. This can be done by going to www.houndify.com/, and creating an account. 
+
+
+
+
+Also, the user needs to install the following if not done already:
+
+pip install word2number
+
+pip install SoundFile
+
