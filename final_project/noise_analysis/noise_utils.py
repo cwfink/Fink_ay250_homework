@@ -220,7 +220,7 @@ def plot_deCorrelatedNoise(noise, lgc_overlay = False, lgcData = True,lgcUnCorrN
             
             if lgcSave:
                 try:
-                    plt.savefig(savePath+noise.name.replace(" ", "_")+'_PSD_overlay.png')
+                    plt.savefig(savePath+noise.name.replace(" ", "_")+'_deCorrNoise_overlay.png')
                 except:
                     print('Invalid save path. Figure not saved')
             plt.show()
