@@ -39,7 +39,11 @@ but no guarantee that it will work.
  * noise.py
  * noise_utils.py
  * noise_example.ipynb
+ * fake_noise_test.ipynb
  * supplemental_note.pdf
+ * fake_noise.npy
+ * fake_noise_correlated.npy
+ * fake_noise_uncorrelated.npy
  * test_traces.npy
  	* Figures in example_Figs/
  		* G124_SLAC_Run_37_Pulse_Tube_On_PSD_subplot.png
@@ -59,8 +63,27 @@ but no guarantee that it will work.
 
 ### Description of Files
 
+
+
+## fake_noise_test.ipynb
+This notebook provides a test of validity of the noise fitting algorithm. It takes
+the provided fake data and decorrelates the noise. It then compares this to the uncorrelated
+and correlated noise traces that were used to make the fake data.
+
+## fake_noise.npy
+an ndarray of fake time series traces. each channel has random noise mixed with a correlated noise source with a different weighting coefficient for each channel. The noise is generated from the model provided in the supplemental note
+
+## fake_noise_correlated.npy
+an ndarray of the correlated time series traces
+
+## fake_noise_uncorrelated.npy
+an ndarray of the uncorrelated time series traces
+
 ## noise_example.ipynb
 An example of how to use the noise class in a jupyter notebook
+
+## test_traces.npy
+ndarray of real time series data from SuperCDMS R and D detector G124
 
 ## supplental_note.pdf
 This document provides the mathematical background behind the method to 
@@ -336,4 +359,8 @@ This file contains some helpful plotting and untility functions for the noise cl
 ## Example
 
 A example jupyter notebook is provied (````noise_example.ipynb````) that walks through all the features. Sample data is provided. All figures from the example are also saved in the directory ````example_Figs/````. The user should run through the example and confirm that the results are the same as those provided. 
+
+## Testing
+
+A testing jupyter notebook in provided (````ake_noise_test.ipynb````) that provides a check of the noise fitting algorithm
 
