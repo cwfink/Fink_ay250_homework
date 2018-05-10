@@ -27,6 +27,10 @@ class noise(object):
                  , corrNoise = None, real_CSD = None, imag_CSD = None, real_CSD_std = None, imag_CSD_std = None \
                  , CSD = None, freqs_CSD = None, sigR = None, sigC = None, reA = None, imA = None \
                  , freqs_fit = None, results = None):
+        
+        if len(channNames) != traces.shape[1]:
+            raise ValueError("the number of channel names must mach the number of channes in traces!")
+        
         self.traces = traces
         self.sampleRate = sampleRate
         self.channNames = channNames
@@ -94,7 +98,7 @@ class noise(object):
         self.real_CSD = real_CSD
     def set_imag_CSD(self,imag_CSD):
         self.imag_CSD = imag_CSD
-    def set real_CSD_std(self, real_CSD_std):
+    def set_real_CSD_std(self, real_CSD_std):
         self.real_CSD_std = real_CSD_std
     def set_imag_CSD_std(self, imag_CSD_std):
         self.imag_CSD_std = imag_CSD_std
@@ -155,7 +159,7 @@ class noise(object):
         nDataPoints = self.traces.shape[0]
         #initialize empty array                           
         corr_coeff = np.empty(shape=(lenPSD,nsizeMatrix,nsizeMatrix)) 
-        traces_fft_chan = np.abs(np.fft.rfft(traces))
+        traces_fft_chan = np.abs(np.fft.rfft(self.traces))
         traces_fft_chan = np.swapaxes(traces_fft_chan, 0,1)
         for n in range(lenPSD):
             corr_coeff[n] = np.corrcoef(traces_fft_chan[:,:,n])
@@ -234,10 +238,10 @@ class noise(object):
                      statements are called.
         Returns: None
         '''
-        if self.real_CSD == None:
+        if self.real_CSD is None:
             print('calculating CSD')
             self.calculate_CSD(lgc_full_CSD , lenCSD )
-        if self.corrCoeff == None:
+        if self.corrCoeff is None:
             print('calculating correlation coefficients')
             self.calculate_corrCoeff()
             
@@ -363,19 +367,22 @@ class noise(object):
             
         ###### Loop over all Frequencies and perform fit #######
         for iFreq in range(freqs.shape[0]):
+        
+            
             if verbose:
                 if iFreq % 50 == 0: 
                     percentDoneStr = str(round((iFreq+1)/(freqs.shape[0]),3)*100.0)
                     print('\n Fitting frequency bin ', iFreq , ' out of ',freqs.shape[0])
                     print('\n ====== ', percentDoneStr ,'percent Done ================ ')
+            iFreq += freq_range[0]
             p0, bounds = get_guess(iFreq) #get guess
             popt1 = least_squares(residual,p0,jac = 'cs',bounds=bounds,x_scale = 'jac' \
                                   ,loss='linear',max_nfev=1000,verbose=0,xtol=1.0e-17,ftol=1.0e-17,f_scale=1.0)
             # check if fit fialed, if it did, then we want to remove it from our good values
             if not popt1['success']:
-                fit_Fails[iFreq] = True
+                fit_Fails[iFreq - freq_range[0]] = True
             if np.any(popt1['active_mask'] != 0):
-                fit_Fails[iFreq] = True
+                fit_Fails[iFreq - freq_range[0]] = True
             results.append(popt1)
             reA, imA, sigR, sigC,corr_noise, unCorr_noise = results_to_variable(results)
             
@@ -396,10 +403,10 @@ class noise(object):
         noise_utils.plot_PSD(self,lgc_overlay, lgcSave, savePath)
         
                    
-    def plot_corrCoef(self, lgcSave = False, savePath = None):
+    def plot_corrCoeff(self, lgcSave = False, savePath = None):
 
         
-        noise_utils.plot_corrCoef(self, lgcSave, savePath)
+        noise_utils.plot_corrCoeff(self, lgcSave, savePath)
         
                       
     def plot_CSD(self, whichCSD = ['01'],lgcReal = True,lgcSave = False, savePath = None):
