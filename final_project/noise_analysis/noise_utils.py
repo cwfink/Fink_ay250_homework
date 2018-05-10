@@ -43,12 +43,13 @@ def plot_PSD(noise, lgc_overlay = True, lgcSave = False, savePath = None):
             for ichan, channel in enumerate(noise.channNames):
                 plt.loglog(noise.freqs[1:], np.sqrt(noise.PSD[ichan][1:]), label = channel)
             plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-            plt.show()
+            
             if lgcSave:
                 try:
                     plt.savefig(savePath+noise.name.replace(" ", "_")+'_PSD_overlay.png')
                 except:
                     print('Invalid save path. Figure not saved')
+            plt.show()
         ### Subplots            
         else:
             sns.set_context('poster', font_scale = 1.9)
@@ -74,12 +75,13 @@ def plot_PSD(noise, lgc_overlay = True, lgcSave = False, savePath = None):
                     axes[iRow,jColumn].axis('off')
             plt.tight_layout() 
             plt.subplots_adjust(top=0.95)
-            plt.show()
+            
             if lgcSave:
                 try:
                     plt.savefig(savePath+noise.name.replace(" ", "_")+'_PSD_subplot.png')
                 except:
                     print('Invalid save path. Figure not saved')
+            plt.show()
 
                 
 def plot_corrCoeff(noise, lgcSave = False, savePath = None):
@@ -111,12 +113,14 @@ def plot_corrCoeff(noise, lgcSave = False, savePath = None):
         plt.ylabel(r'Correlation Coeff [COV(x,y)/$\sigma_x \sigma_y$]')
         plt.grid(which = 'both')
         plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-        plt.show()
+        
         if lgcSave:
             try:
                 plt.savefig(savePath+noise.name.replace(" ", "_")+'_corrCoeff.png')
             except:
                 print('Invalid save path. Figure not saved')
+        
+        plt.show()
 
 
 def plot_CSD(noise, whichCSD = ['01'],lgcReal = True,lgcSave = False, savePath = None):
@@ -168,13 +172,13 @@ def plot_CSD(noise, whichCSD = ['01'],lgcReal = True,lgcSave = False, savePath =
             plt.grid(which = 'both')
             plt.xlabel('frequency [Hz]')
             plt.ylabel(r'CSD [A$^2$/Hz]')
-            plt.show()
+            
             if lgcSave:
                 try:
                     plt.savefig(savePath + title.replace(" ", "_"))
                 except:
                     print('Invalid save path. Figure not saved')
-
+            plt.show()
 
 def plot_deCorrelatedNoise(noise, lgc_overlay = False, lgcData = True,lgcUnCorrNoise = True, lgcCorrelated = False \
                                , lgcSum = False,lgcSave = False, savePath = None):
@@ -213,12 +217,13 @@ def plot_deCorrelatedNoise(noise, lgc_overlay = False, lgcData = True,lgcUnCorrN
             for ichan, channel in enumerate(noise.channNames):
                     plt.loglog(noise.freqs_fit[1:], np.sqrt(noise.unCorrNoise[ichan][1:]), label = channel)
             plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-            plt.show()
+            
             if lgcSave:
                 try:
-                    plt.savefig(savePath+noise.name.replace(" ", "_")+'_PSD_overlay.png')
+                    plt.savefig(savePath+noise.name.replace(" ", "_")+'_deCorrNoise_overlay.png')
                 except:
                     print('Invalid save path. Figure not saved')
+            plt.show()
         ### Subplots
         else:
             sns.set_context('poster', font_scale = 1.9)
@@ -256,13 +261,13 @@ def plot_deCorrelatedNoise(noise, lgc_overlay = False, lgcData = True,lgcUnCorrN
                     axes[iRow,jColumn].axis('off')
             plt.tight_layout() 
             plt.subplots_adjust(top=0.95)
-            plt.show()
+            
             if lgcSave:
                 try:
                     plt.savefig(savePath+noise.name.replace(" ", "_")+'_deCorrNoise_subplot.png')
                 except:
                     print('Invalid save path. Figure not saved')
- 
+            plt.show()
 
 def fill_negatives(arr):
     '''
