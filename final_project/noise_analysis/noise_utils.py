@@ -42,11 +42,11 @@ def plot_PSD(noise, lgc_overlay = True, lgcSave = False, savePath = None):
             plt.grid(which = 'both')
             for ichan, channel in enumerate(noise.channNames):
                 plt.loglog(noise.freqs[1:], np.sqrt(noise.PSD[ichan][1:]), label = channel)
-            plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+            lgd = plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
             
             if lgcSave:
                 try:
-                    plt.savefig(savePath+noise.name.replace(" ", "_")+'_PSD_overlay.png')
+                    plt.savefig(savePath+noise.name.replace(" ", "_")+'_PSD_overlay.png',bbox_extra_artists=(lgd,), bbox_inches='tight')
                 except:
                     print('Invalid save path. Figure not saved')
             plt.show()
@@ -112,11 +112,11 @@ def plot_corrCoeff(noise, lgcSave = False, savePath = None):
         plt.xlabel('frequency [Hz]')
         plt.ylabel(r'Correlation Coeff [COV(x,y)/$\sigma_x \sigma_y$]')
         plt.grid(which = 'both')
-        plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+        lgd = plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=1.)
         
         if lgcSave:
             try:
-                plt.savefig(savePath+noise.name.replace(" ", "_")+'_corrCoeff.png')
+                plt.savefig(savePath+noise.name.replace(" ", "_")+'_corrCoeff.png',bbox_extra_artists=(lgd,), bbox_inches='tight')
             except:
                 print('Invalid save path. Figure not saved')
         
@@ -216,11 +216,11 @@ def plot_deCorrelatedNoise(noise, lgc_overlay = False, lgcData = True,lgcUnCorrN
             plt.title('{} de-correlated noise'.format(noise.name))
             for ichan, channel in enumerate(noise.channNames):
                     plt.loglog(noise.freqs_fit[1:], np.sqrt(noise.unCorrNoise[ichan][1:]), label = channel)
-            plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+            lgd = plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
             
             if lgcSave:
                 try:
-                    plt.savefig(savePath+noise.name.replace(" ", "_")+'_deCorrNoise_overlay.png')
+                    plt.savefig(savePath+noise.name.replace(" ", "_")+'_deCorrNoise_overlay.png',bbox_extra_artists=(lgd,), bbox_inches='tight') 
                 except:
                     print('Invalid save path. Figure not saved')
             plt.show()
