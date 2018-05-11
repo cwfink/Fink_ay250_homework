@@ -9,6 +9,8 @@ from cross channel correlated noise.
 
 **Author** :: *Caleb Fink*, phd student, UC Berkeley 
 
+**Link to screen share on DropBox:** https://www.dropbox.com/sh/hzstzru38wuvm0k/AABT3X7GDNX6BjwOO6z9Pyjma?dl=0
+
 
 ## Getting Started
 
